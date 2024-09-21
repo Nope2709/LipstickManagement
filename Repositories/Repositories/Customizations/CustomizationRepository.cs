@@ -1,4 +1,6 @@
-﻿using DataAccess.DTO.Customizes;
+﻿
+using DataAccess.Customizes;
+
 using DataAccess.DTO.RequestModel;
 using DataAccess.DTO.ResponseModel;
 using System;
@@ -11,18 +13,23 @@ namespace Repository.Repositories.Customizations
 {
     public class CustomizationRepository : ICustomizationRepository
     {
-        public Task<string> CreateCustomization(CreateCustomizeRequestModel cus) => CustomizeDAO.Instance.CreateCustomization(cus);
+        public readonly CustomizeDAO _customizeDAO;
+        public CustomizationRepository(CustomizeDAO customizationDAO)
+        {
+            _customizeDAO = customizationDAO;
+        }
+        public async Task<string> CreateCustomization(CreateCustomizeRequestModel cus) => await _customizeDAO.CreateCustomization(cus);
         
 
-        public Task<string> DeleteCustomization(int id) => CustomizeDAO.Instance.DeleteCustomization(id);
+        public async Task<string> DeleteCustomization(int id) => await _customizeDAO.DeleteCustomization(id);
 
 
 
-        public Task<CustomizeResponseModel> GetCustomizationByID(int id) => CustomizeDAO.Instance.GetCustomizationByID(id);
+        public async Task<CustomizeResponseModel> GetCustomizationByID(int id) => await _customizeDAO.GetCustomizationByID(id);
 
 
 
-        public Task<string> UpdateCustomization(UpdateCustomizeRequestModel cus) => CustomizeDAO.Instance.UpdateCustomization(cus);
+        public async Task<string> UpdateCustomization(UpdateCustomizeRequestModel cus) => await _customizeDAO.UpdateCustomization(cus);
 
 
     }

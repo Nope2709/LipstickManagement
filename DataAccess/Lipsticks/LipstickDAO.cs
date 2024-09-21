@@ -11,12 +11,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.DTO.Lipsticks
+namespace DataAccess.Lipsticks
 {
     public class LipstickDAO
     {
         private static LipstickDAO instance;
-        private static object instanceLock = new object();
+        //private static object instanceLock = new object();
         private readonly LipstickManagementContext _context = new();
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
@@ -28,31 +28,14 @@ namespace DataAccess.DTO.Lipsticks
             _currentUserService = currentUserService;
         }
 
-        public LipstickDAO()
-        {
-        }
-
-        public static LipstickDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new LipstickDAO();
-                    }
-                }
-                return instance;
-            }
-        }
+       
 
 
 
         public async Task<string> CreateLipstick(CreateLipstickRequestModel lipStick)
         {
 
-
+            
             var newLipStick = new Lipstick()
             {
                 ShadeName = lipStick.ShadeName,
@@ -63,7 +46,7 @@ namespace DataAccess.DTO.Lipsticks
                 imageURL = lipStick.imageURL,
             };
 
-             _context.Lipsticks.Add(newLipStick);
+            _context.Lipsticks.Add(newLipStick);
             try
             {
                 await _context.SaveChangesAsync();

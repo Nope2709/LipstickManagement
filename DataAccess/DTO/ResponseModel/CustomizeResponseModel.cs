@@ -12,5 +12,6 @@ namespace DataAccess.DTO.ResponseModel
         public int? LipstickId { get; set; }
         public string? EngravingText { get; set; }
         public string? QrCodeUrl { get; set; }
+        public string Lipstick { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BussinessObject;
-using DataAccess.DTO.Lipsticks;
 using DataAccess.DTO.RequestModel;
 using DataAccess.DTO.ResponseModel;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.DTO.Customizes
+namespace DataAccess.Customizes
 {
     public class CustomizeDAO
     {
@@ -29,37 +28,22 @@ namespace DataAccess.DTO.Customizes
             _currentUserService = currentUserService;
         }
 
-        public CustomizeDAO()
-        {
-        }
-
-        public static CustomizeDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new CustomizeDAO();
-                    }
-                }
-                return instance;
-            }
-        }
+        
 
 
 
         public async Task<string> CreateCustomization(CreateCustomizeRequestModel cus)
         {
-
+            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.LipstickId == cus.LipstickId);
+            if (!checkLipstick)
+                throw new InvalidDataException("Lipstick is not found");
 
             var newCus = new Customization()
             {
                 LipstickId = cus.LipstickId,
                 EngravingText = cus.EngravingText,
                 QrCodeUrl = cus.QrCodeUrl,
-                
+
             };
 
             _context.Customizations.Add(newCus);
@@ -78,14 +62,16 @@ namespace DataAccess.DTO.Customizes
         {
             var hotPotEntity = await _context.Customizations.SingleOrDefaultAsync(x => x.CustomizationId == cus.CustomizationId);
             if (hotPotEntity == null)
+                throw new InvalidDataException("Customize is not found");
+
+            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.LipstickId == cus.LipstickId);
+            if (!checkLipstick)
                 throw new InvalidDataException("Lipstick is not found");
-
-
 
             hotPotEntity.LipstickId = cus.LipstickId;
             hotPotEntity.EngravingText = cus.EngravingText;
             hotPotEntity.QrCodeUrl = cus.QrCodeUrl;
-          
+
 
             _context.Customizations.Update(hotPotEntity);
             if (await _context.SaveChangesAsync() > 0)
