@@ -13,6 +13,9 @@ using System.Text;
 using DataAccess.Lipsticks;
 using DataAccess.Customizes;
 using Repository.Repositories.Customizations;
+using Repositories.Repositories.Feedbacks;
+using BussinessObject;
+using DataAccess.Feedbacks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<LipstickManagementContext>(ServiceLifetime.Transient);
 //builder.Services.AddDbContext<LipstickManagementContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "LipstickManagement API", Version = "v1" });
@@ -80,6 +84,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAutoMapper(typeof(UserRepository));
 builder.Services.AddScoped(typeof(LipstickDAO));
 builder.Services.AddScoped(typeof(CustomizeDAO));
+builder.Services.AddScoped(typeof(FeedbacksDAO));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
@@ -88,6 +93,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILipstickRepositories, LipstickRepository>();
 builder.Services.AddScoped<ICustomizationRepository, CustomizationRepository>();
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
 var app = builder.Build();
 

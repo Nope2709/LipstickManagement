@@ -104,7 +104,7 @@ namespace LipstickManagementWebAPI.Controllers
             }
         }
 
-        [HttpDelete("user")]
+        [HttpDelete("user/delete")]
         public async Task<ActionResult<JsonResponse<string>>> DeleteUser(int id)
         {
             try

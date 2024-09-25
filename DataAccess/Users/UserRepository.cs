@@ -33,10 +33,11 @@ namespace Repository.Users
 
         public async Task<LoginResponseModel> Login(LoginRequestModel loginRequest)
         {
-            var user = await _context.Accounts.SingleOrDefaultAsync(x => x.Email == loginRequest.Email);
+            var user = await _context.Accounts.SingleOrDefaultAsync(x => x.Phone == loginRequest.Phone
+            );
             if (user == null)
             {
-                throw new InvalidDataException($"Email is not found - {loginRequest.Email}");
+                throw new InvalidDataException($"Phone is not found - {loginRequest.Phone}");
             }
 
             if (user != null)
@@ -44,17 +45,19 @@ namespace Repository.Users
                 var chucvu = await _context.Roles.SingleOrDefaultAsync(x => x.RoleId == user.RoleId);
                 if (chucvu == null)
                 {
-                    throw new Exception($"Role is not found - {loginRequest.Email}");
+                    throw new Exception($"Role is not found - {loginRequest.Phone}");
                 }
 
                 var samePassword = _passwordService.VerifyPassword(loginRequest.Password, user.Password);
                 if (samePassword)
                 {
                     return _mapper.Map<LoginResponseModel>(user);
+                    
                 }
+                
             }
 
-            throw new Exception("Wrong Email Or Password");
+            throw new Exception("Wrong Phone Or Password");
         }
         public async Task<string> CreateUser(CreateUserRequestModel user)
         {
@@ -83,45 +86,45 @@ namespace Repository.Users
             };
             _context.Accounts.Add(newUser);
             if (await _context.SaveChangesAsync() > 0)
-                return "Create Successfully";
+                return "Register Successfully";
             else
-                return "Create Failed";
+                return "Register Failed";
         }
-        //public async Task<List<UserResponseModel>> GetUsers(string? search,string? gender, string? sortBy, int pageIndex, int pageSize)
-        //{
-        //    //NHỚ CHECK DELETEDATE
-        //    IQueryable<Account> users = _context.Accounts.Include(x => x.Role).Where(x => x.DeleteDate == null);
+        public async Task<List<UserResponseModel>> GetUsers(string? search, string? gender, string? sortBy, int pageIndex, int pageSize)
+        {
+            //NHỚ CHECK DELETEDATE
+            IQueryable<Account> users = _context.Accounts.Include(x => x.Role);
 
 
-        //    //SEARCH THEO NAME
-        //    if (!string.IsNullOrEmpty(search))
-        //    {
-        //        users = users.Where(x => x.Name.Contains(search));
-        //    }
+            //SEARCH THEO NAME
+            if (!string.IsNullOrEmpty(search))
+            {
+                users = users.Where(x => x.Name.Contains(search));
+            }
 
-        //    //FILTER THEO GENDER
-        //    if (!string.IsNullOrEmpty(gender))
-        //    {
-        //        users = users.Where(x => x..Equals(gender));
-        //    }
+            //FILTER THEO GENDER
+            if (!string.IsNullOrEmpty(gender))
+            {
+                users = users.Where(x => x.Equals(gender));
+            }
 
-        //    //SORT THEO NAME
-        //    if (!string.IsNullOrEmpty(sortBy))
-        //    {
-        //        if (sortBy.Equals("asc"))
-        //        {
-        //            users = users.OrderBy(x => x.Name);
-        //        }
-        //        else if (sortBy.Equals("desc"))
-        //        {
-        //            users = users.OrderByDescending(x => x.Name);
-        //        }
-        //    }
+            //SORT THEO NAME
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                if (sortBy.Equals("asc"))
+                {
+                    users = users.OrderBy(x => x.Name);
+                }
+                else if (sortBy.Equals("desc"))
+                {
+                    users = users.OrderByDescending(x => x.Name);
+                }
+            }
 
-        //    var paginatedUsers = PaginatedList<UserEntity>.Create(users, pageIndex, pageSize);
+            var paginatedUsers = PaginatedList<Account>.Create(users, pageIndex, pageSize);
 
-        //    return _mapper.Map<List<UserResponseModel>>(paginatedUsers);
-        //}
+            return _mapper.Map<List<UserResponseModel>>(paginatedUsers);
+        }
         public async Task<UserResponseModel> GetUserByEmail(string email)
         {
             var user = await _context.Accounts.Include(r=>r.Role).SingleOrDefaultAsync(x => x.Email == email);
@@ -162,10 +165,7 @@ namespace Repository.Users
 
         }
 
-        public Task<List<UserResponseModel>> GetUsers(string? search, string? gender, string? sortBy, int pageIndex, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task<string> DeleteUser(int id)
         {

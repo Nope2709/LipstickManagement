@@ -2,6 +2,7 @@
 using DataAccess.DTO.RequestModel;
 using DataAccess.DTO.ResponseModel;
 using HotPotToYou.Controllers.ResponseType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Repositories.Lipsticks;
 
@@ -9,6 +10,7 @@ namespace LipstickManagementWebAPI.Controllers
 {
     [Route("api/v1")]
     [ApiController]
+    [Authorize]
     public class LipstickController : Controller
     {
         private readonly ILipstickRepositories _lipStickRepo;

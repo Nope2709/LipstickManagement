@@ -16,5 +16,6 @@ namespace DataAccess.DTO.ResponseModel
         public int? StockQuantity { get; set; }
 
         public string? imageURL { get; set; }
+        public List<FeedbackResponseModel> feedbacks { get; set; }  
     }
 }

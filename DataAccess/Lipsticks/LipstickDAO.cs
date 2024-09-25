@@ -101,7 +101,7 @@ namespace DataAccess.Lipsticks
             int? flavorID, string? size, string? type,
             int pageIndex, int pageSize)
         {
-            IQueryable<Lipstick> hotPots = _context.Lipsticks.Where(x => x.LipstickId != null);
+            IQueryable<Lipstick> hotPots = _context.Lipsticks.Include(f=>f.Feedbacks).Where(x => x.LipstickId != null);
 
             //TÌM THEO TÊN
             if (!string.IsNullOrEmpty(search))
@@ -154,11 +154,15 @@ namespace DataAccess.Lipsticks
 
         public async Task<LipstickResponseModel> GetLipstickByID(int id)
         {
-            var hotpot = await _context.Lipsticks.SingleOrDefaultAsync(x => x.LipstickId == id);
+            var hotpot = await _context.Lipsticks.Include(f=>f.Feedbacks).SingleOrDefaultAsync(x => x.LipstickId == id);
             if (hotpot == null)
                 throw new Exception("Lipstick is not found");
 
             return _mapper.Map<LipstickResponseModel>(hotpot);
+        }
+        public Task<bool> lipstickExists(int id)
+        {
+            return _context.Lipsticks.AnyAsync(l => l.LipstickId == id);
         }
     }
 }

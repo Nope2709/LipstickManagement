@@ -26,7 +26,9 @@ namespace Repository.Repositories.Lipsticks
         
 
         public async Task<LipstickResponseModel> GetLipstickByID(int id) => await _lipstickDAO.GetLipstickByID(id);
-        
+
+        public Task<bool> lipstickExists(int id) =>  _lipstickDAO.lipstickExists(id);
+
 
         public async Task<string> UpdateLipstick(UpdateLipstickRequestModel lipStick) => await _lipstickDAO.UpdateLipstick(lipStick);
 

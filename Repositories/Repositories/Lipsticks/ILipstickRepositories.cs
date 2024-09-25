@@ -25,5 +25,6 @@ namespace Repository.Repositories.Lipsticks
             int pageIndex, int pageSize);
 
         Task<LipstickResponseModel> GetLipstickByID(int id);
+        Task<bool> lipstickExists(int id);
     }
 }
