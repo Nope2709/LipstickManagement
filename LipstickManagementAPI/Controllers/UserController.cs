@@ -61,12 +61,12 @@ namespace LipstickManagementWebAPI.Controllers
         }
 
         [HttpGet("user")]
-        public async Task<ActionResult<List<JsonResponse<UserResponseModel>>>> GetUsers(string? search, string? gender, string? sortBy, int pageIndex, int pageSize)
+        public async Task<ActionResult<List<UserResponseModel>>> GetUsers(string? search, string? gender, string? sortBy, int pageIndex, int pageSize)
         {
             try
             {
                 var result = await _userService.GetUsers(search, gender, sortBy, pageIndex, pageSize);
-                return Ok(new JsonResponse<List<UserResponseModel>>(result));
+                return Ok(new List<UserResponseModel>(result));
             }
             catch (Exception ex)
             {
@@ -103,13 +103,13 @@ namespace LipstickManagementWebAPI.Controllers
                 return BadRequest(new JsonResponse<string>(ex.Message));
             }
         }
-
-        [HttpDelete("user/delete")]
-        public async Task<ActionResult<JsonResponse<string>>> DeleteUser(int id)
+        [HttpPut("user/change-password")]
+        public async Task<ActionResult<JsonResponse<string>>> ChangePassword(
+            [FromBody] ChangePasswordRequestModel user)
         {
             try
             {
-                var result = await _userService.DeleteUser(id);
+                var result = await _userService.ChangePasswordUser(user);
                 return Ok(new JsonResponse<string>(result));
             }
             catch (Exception ex)
@@ -117,5 +117,6 @@ namespace LipstickManagementWebAPI.Controllers
                 return BadRequest(new JsonResponse<string>(ex.Message));
             }
         }
+        
     }
 }

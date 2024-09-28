@@ -51,7 +51,7 @@ namespace LipstickManagementWebAPI.Controllers
         }
 
         [HttpGet("lipstick")]
-        public async Task<ActionResult<List<JsonResponse<LipstickResponseModel>>>> GetLipsticks(string? search, string? sortBy,
+        public async Task<ActionResult<List<LipstickResponseModel>>> GetLipsticks(string? search, string? sortBy,
             decimal? fromPrice, decimal? toPrice,
             int? flavorID, string? size, string? type,
             int pageIndex, int pageSize)
@@ -59,7 +59,7 @@ namespace LipstickManagementWebAPI.Controllers
             try
             {
                 var result = await _lipStickRepo.GetLipstick(search, sortBy, fromPrice, toPrice, flavorID, size, type, pageIndex, pageSize);
-                return Ok(new JsonResponse<List<LipstickResponseModel>>(result));
+                return Ok(new List<LipstickResponseModel>(result));
             }
             catch (Exception ex)
             {

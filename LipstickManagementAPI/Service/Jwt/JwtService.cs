@@ -16,7 +16,7 @@ namespace HotPotToYou.Service.Jwt
                 new(ClaimTypes.Role, roles)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("H0t P0t T0 Y0u @lways R3@dy 4 U 2 R3nt!!!"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("M0i M0c @lways R3@dy 4 U 2 0rd3r!!!"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

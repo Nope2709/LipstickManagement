@@ -138,6 +138,27 @@ namespace DataAccess.Migrations
                     b.ToTable("Feedbacks");
                 });
 
+            modelBuilder.Entity("BussinessObject.ImageURL", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"), 1L, 1);
+
+                    b.Property<int?>("LipstickId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("LipstickId");
+
+                    b.ToTable("ImageURLs");
+                });
+
             modelBuilder.Entity("BussinessObject.Lipstick", b =>
                 {
                     b.Property<int>("LipstickId")
@@ -149,11 +170,11 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ShadeName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StockQuantity")
                         .HasColumnType("int");
@@ -161,7 +182,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("imageURL")
+                    b.Property<string>("Usage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LipstickId");
@@ -297,6 +318,13 @@ namespace DataAccess.Migrations
                     b.Navigation("Lipstick");
                 });
 
+            modelBuilder.Entity("BussinessObject.ImageURL", b =>
+                {
+                    b.HasOne("BussinessObject.Lipstick", null)
+                        .WithMany("ImageURLs")
+                        .HasForeignKey("LipstickId");
+                });
+
             modelBuilder.Entity("BussinessObject.OrderDetail", b =>
                 {
                     b.HasOne("BussinessObject.Account", "Account")
@@ -343,6 +371,8 @@ namespace DataAccess.Migrations
                     b.Navigation("Customizations");
 
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("ImageURLs");
 
                     b.Navigation("OrderDetails");
                 });

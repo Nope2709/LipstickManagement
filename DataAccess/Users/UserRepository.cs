@@ -49,6 +49,7 @@ namespace Repository.Users
                 }
 
                 var samePassword = _passwordService.VerifyPassword(loginRequest.Password, user.Password);
+                
                 if (samePassword)
                 {
                     return _mapper.Map<LoginResponseModel>(user);
@@ -71,7 +72,9 @@ namespace Repository.Users
             var role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName.Equals("Guest"));
             if (role == null)
                 throw new InvalidDataException("Guest is not found");
-
+            
+            if (user.ConfirmPassword != user.Password)
+                throw new InvalidDataException("Password not match");
             var newUser = new Account()
             {
                 Name = user.Name,
@@ -135,6 +138,7 @@ namespace Repository.Users
         }
         public async Task<string> UpdateUser(UpdateUserRequestModel user)
         {
+            
             var checkUser = await _context.Accounts.SingleOrDefaultAsync(x => x.AccountId == user.ID);
             if (checkUser == null)
                 throw new InvalidDataException("User is not found");
@@ -164,8 +168,35 @@ namespace Repository.Users
                 return "Update Failed";
 
         }
+        public async Task<string> ChangePasswordUser(ChangePasswordRequestModel user)
+        {
+            
+            var checkPassword = await _context.Accounts.SingleOrDefaultAsync(x => x.Email == user.Email);
+            if (checkPassword == null)
+                throw new InvalidDataException("Email not found");
 
-        
+            if (user.ConfirmPassword != user.NewPassword)
+                throw new InvalidDataException("Password not match");
+           
+            checkPassword.Password = _passwordService.HashPassword(user.NewPassword);
+            _context.Accounts.Update(checkPassword);
+            if (await _context.SaveChangesAsync() > 0)
+                return "Update Password Successfully";
+            else
+                return "Update Password Failed";
+
+
+
+        }
+
+        public async Task<UserResponseModel> GetUserByID(int id)
+        {
+            var user = await _context.Accounts.Include(r => r.Role).SingleOrDefaultAsync(x => x.AccountId == id);
+            if (user == null)
+                throw new Exception("User is not found");
+
+            return _mapper.Map<UserResponseModel>(user);
+        }
 
         public Task<string> DeleteUser(int id)
         {

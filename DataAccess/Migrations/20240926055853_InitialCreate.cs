@@ -19,8 +19,7 @@ namespace DataAccess.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    StockQuantity = table.Column<int>(type: "int", nullable: true),
-                    imageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    StockQuantity = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,6 +67,25 @@ namespace DataAccess.Migrations
                     table.PrimaryKey("PK_Customizations", x => x.CustomizationId);
                     table.ForeignKey(
                         name: "FK_Customizations_Lipsticks_LipstickId",
+                        column: x => x.LipstickId,
+                        principalTable: "Lipsticks",
+                        principalColumn: "LipstickId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImageURLs",
+                columns: table => new
+                {
+                    ImageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LipstickId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageURLs", x => x.ImageId);
+                    table.ForeignKey(
+                        name: "FK_ImageURLs_Lipsticks_LipstickId",
                         column: x => x.LipstickId,
                         principalTable: "Lipsticks",
                         principalColumn: "LipstickId");
@@ -213,6 +231,11 @@ namespace DataAccess.Migrations
                 column: "LipstickId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ImageURLs_LipstickId",
+                table: "ImageURLs",
+                column: "LipstickId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_AccountId",
                 table: "OrderDetails",
                 column: "AccountId");
@@ -240,6 +263,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
+
+            migrationBuilder.DropTable(
+                name: "ImageURLs");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

@@ -45,5 +45,10 @@ namespace Repository.Repositories.Users
         {
             return await _userRepository.GetUserByEmail(email);
         }
+
+        public async Task<string> ChangePasswordUser(ChangePasswordRequestModel user)
+        {
+            return await _userRepository.ChangePasswordUser(user);
+        }
     }
 }

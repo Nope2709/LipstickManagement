@@ -14,7 +14,7 @@ namespace DataAccess.Customizes
         public CustomizeMappingProfile() 
         { 
             CreateMap<Customization, CustomizeResponseModel>()
-                .ForMember(dest => dest.Lipstick, opt => opt.MapFrom(src => src.Lipstick.ShadeName)); 
+                .ForMember(dest => dest.Lipstick, opt => opt.MapFrom(src => src.Lipstick.Name)); 
         }
     }
 }

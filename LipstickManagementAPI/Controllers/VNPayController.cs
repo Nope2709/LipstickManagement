@@ -12,8 +12,8 @@ namespace LipstickManagementAPI.Controllers
         // VNPay configuration
         public static string VnpPayUrl { get; } = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         public static string VnpReturnUrl { get; } = "https://localhost:7035/api/VNPay/handleCallback"; // Replace with your actual return URL after successful payment
-        public static string VnpTmnCode { get; } = "P8Y3QRZ3"; // Replace with your actual VNPay TmnCode
-        public static string SecretKey { get; } = "BDH8UD3Z9R70XJLIE5DGLLVNMOZFJTH2";
+        public static string VnpTmnCode { get; } = "QVZTXZMI"; // Replace with your actual VNPay TmnCode
+        public static string SecretKey { get; } = "U4MOFMFC0IDFWSHM9U02MOT5ASUU5F1U";
         public string VnpVersion { get; set; } = "2.1.0";
         public string VnpCommand { get; set; } = "pay";
         public string OrderType { get; set; } = "other"; // Update to match your order type logic
@@ -32,7 +32,7 @@ namespace LipstickManagementAPI.Controllers
             string clientIPAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
 
             PayLib pay = new PayLib();
-            int amount = (int)(request.Amount * 100);
+            decimal amount = (decimal)(request.Price * 100);
             pay.AddRequestData("vnp_Version", VnpVersion);
             pay.AddRequestData("vnp_Command", VnpCommand);
             pay.AddRequestData("vnp_TmnCode", VnpTmnCode);
@@ -90,7 +90,7 @@ namespace LipstickManagementAPI.Controllers
 
     public class VNPayPaymentRequest
     {
-        public int Amount { get; set; }
+        public int Price { get; set; }
         public string OrderInfo { get; set; }
         // Add more properties as needed for your payment request
     }

@@ -16,6 +16,8 @@ using Repository.Repositories.Customizations;
 using Repositories.Repositories.Feedbacks;
 using BussinessObject;
 using DataAccess.Feedbacks;
+using DataAccess.Addresses;
+using Repositories.Repositories.Addresses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,7 +70,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = "test",
         ValidAudience = "api",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("H0t P0t T0 Y0u @lways R3@dy 4 U 2 R3nt!!!"))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("M0i M0c @lways R3@dy 4 U 2 0rd3r!!!"))
     };
 });
 builder.Services.AddCors(options =>
@@ -85,6 +87,7 @@ builder.Services.AddAutoMapper(typeof(UserRepository));
 builder.Services.AddScoped(typeof(LipstickDAO));
 builder.Services.AddScoped(typeof(CustomizeDAO));
 builder.Services.AddScoped(typeof(FeedbacksDAO));
+builder.Services.AddScoped(typeof(AddressDAO));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
@@ -94,6 +97,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILipstickRepositories, LipstickRepository>();
 builder.Services.AddScoped<ICustomizationRepository, CustomizationRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
 var app = builder.Build();
 

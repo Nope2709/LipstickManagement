@@ -12,7 +12,10 @@ namespace DataAccess.Lipsticks
     public class LipstickMappingProfile : Profile
     {
         public LipstickMappingProfile() { CreateMap<Lipstick, LipstickResponseModel>()
-                .ForMember(dest => dest.feedbacks, opt => opt.MapFrom(src => src.Feedbacks)); }
+                .ForMember(dest => dest.feedbacks, opt => opt.MapFrom(src => src.Feedbacks))
+                .ForMember(dest => dest.imageURLs, opt => opt.MapFrom(src => src.ImageURLs));
+        }
+
         
     }
 }

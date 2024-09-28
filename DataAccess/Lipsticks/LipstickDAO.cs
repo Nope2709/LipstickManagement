@@ -38,12 +38,13 @@ namespace DataAccess.Lipsticks
             
             var newLipStick = new Lipstick()
             {
-                ShadeName = lipStick.ShadeName,
+                Name = lipStick.Name,
+                Usage = lipStick.Usage, 
                 Type = lipStick.Type,
                 Description = lipStick.Description,
                 Price = lipStick.Price,
                 StockQuantity = lipStick.StockQuantity,
-                imageURL = lipStick.imageURL,
+                ImageURLs = lipStick.imageURLs,
             };
 
             _context.Lipsticks.Add(newLipStick);
@@ -66,12 +67,13 @@ namespace DataAccess.Lipsticks
 
 
 
-            hotPotEntity.ShadeName = lipStick.ShadeName;
+            hotPotEntity.Name = lipStick.Name;
+            hotPotEntity.Usage = lipStick.Usage;    
             hotPotEntity.Type = lipStick.Type;
             hotPotEntity.Description = lipStick.Description;
             hotPotEntity.Price = lipStick.Price;
             hotPotEntity.StockQuantity = lipStick.StockQuantity;
-            hotPotEntity.imageURL = lipStick.imageURL;
+            hotPotEntity.ImageURLs = lipStick.imageURLs;
 
 
             _context.Lipsticks.Update(hotPotEntity);
@@ -101,12 +103,12 @@ namespace DataAccess.Lipsticks
             int? flavorID, string? size, string? type,
             int pageIndex, int pageSize)
         {
-            IQueryable<Lipstick> hotPots = _context.Lipsticks.Include(f=>f.Feedbacks).Where(x => x.LipstickId != null);
+            IQueryable<Lipstick> hotPots = _context.Lipsticks.Include(f=>f.Feedbacks).Include(i=>i.ImageURLs).Where(x => x.LipstickId != null);
 
             //TÌM THEO TÊN
             if (!string.IsNullOrEmpty(search))
             {
-                hotPots = hotPots.Where(x => x.ShadeName.Contains(search) || x.Type.Contains(search));
+                hotPots = hotPots.Where(x => x.Name.Contains(search) || x.Type.Contains(search));
             }
 
 
@@ -126,11 +128,11 @@ namespace DataAccess.Lipsticks
             {
                 if (sortBy.Equals("ascName"))
                 {
-                    hotPots = hotPots.OrderBy(x => x.ShadeName);
+                    hotPots = hotPots.OrderBy(x => x.Name);
                 }
                 else if (sortBy.Equals("descName"))
                 {
-                    hotPots = hotPots.OrderByDescending(x => x.ShadeName);
+                    hotPots = hotPots.OrderByDescending(x => x.Name);
                 }
             }
 
@@ -154,7 +156,7 @@ namespace DataAccess.Lipsticks
 
         public async Task<LipstickResponseModel> GetLipstickByID(int id)
         {
-            var hotpot = await _context.Lipsticks.Include(f=>f.Feedbacks).SingleOrDefaultAsync(x => x.LipstickId == id);
+            var hotpot = await _context.Lipsticks.Include(f=>f.Feedbacks).Include(i => i.ImageURLs).SingleOrDefaultAsync(x => x.LipstickId == id);
             if (hotpot == null)
                 throw new Exception("Lipstick is not found");
 
