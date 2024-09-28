@@ -14,6 +14,7 @@ namespace BussinessObject
             Feedbacks = new HashSet<Feedback>();
             OrderDetails = new HashSet<OrderDetail>();
             ImageURLs = new HashSet<ImageURL>();
+            LipstickIngredients = new HashSet<LipstickIngredient>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -29,5 +30,6 @@ namespace BussinessObject
         public virtual ICollection<Customization> Customizations { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<LipstickIngredient> LipstickIngredients { get; set; }
     }
 }
