@@ -10,7 +10,7 @@ namespace LipstickManagementWebAPI.Controllers
 {
     [Route("api/v1")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class LipstickController : Controller
     {
         private readonly ILipstickRepositories _lipStickRepo;

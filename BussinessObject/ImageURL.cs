@@ -10,8 +10,10 @@ namespace BussinessObject
         public int ImageId { get; set; }
         
         public string? URL { get; set; }
+        public int? LipstickId { get; set; }
+        public virtual Lipstick? Lipstick { get; set; }
 
-        
-        
+
+
     }
 }

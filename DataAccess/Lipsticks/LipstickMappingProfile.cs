@@ -11,9 +11,15 @@ namespace DataAccess.Lipsticks
 {
     public class LipstickMappingProfile : Profile
     {
-        public LipstickMappingProfile() { CreateMap<Lipstick, LipstickResponseModel>()
+        public LipstickMappingProfile() {
+            CreateMap<Lipstick, LipstickResponseModel>()
                 .ForMember(dest => dest.feedbacks, opt => opt.MapFrom(src => src.Feedbacks))
-                .ForMember(dest => dest.imageURLs, opt => opt.MapFrom(src => src.ImageURLs));
+                .ForMember(dest => dest.imageURLs, opt => opt.MapFrom(src => src.ImageURLs))
+                .ForMember(dest => dest.LipstickIngredients, opt => opt.MapFrom(src => src.LipstickIngredients));
+            CreateMap<Feedback, FeedbackResponseModel>();
+            CreateMap<LipstickIngredient, LipstickIngredientRespnseModel>();
+            CreateMap<ImageURL,ImageURLResponseModel>();
+
         }
 
         

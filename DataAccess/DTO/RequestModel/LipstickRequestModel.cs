@@ -1,4 +1,5 @@
 ﻿using BussinessObject;
+using DataAccess.DTO.ResponseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace DataAccess.DTO.RequestModel
         public string? Description { get; set; }
         public decimal? Price { get; set; }
         public int? StockQuantity { get; set; }
-        public List<ImageURL> imageURLs { get; set; }
+        public List<ImageURLResponseModel> imageURLs { get; set; }
+        public List<LipstickIngredientRespnseModel> LipstickIngredients { get; set; }
 
     }
     public class UpdateLipstickRequestModel
@@ -30,6 +32,9 @@ namespace DataAccess.DTO.RequestModel
         public string? Description { get; set; }
         public decimal? Price { get; set; }
         public int? StockQuantity { get; set; }
-        public List<ImageURL> imageURLs { get; set; }
+        
+        public List<ImageURLResponseModel> imageURLs { get; set; }
+
+        public List<LipstickIngredientRespnseModel> LipstickIngredients { get; set; }
     }
 }

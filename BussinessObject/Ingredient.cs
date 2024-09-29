@@ -14,8 +14,8 @@ namespace BussinessObject
         }
         [Key]
         public int IngredientId {  get; set; }
-        public string Name { get; set; }
-        public decimal Percentage { get; set; }
+        public string? Name { get; set; }
+        public decimal? Percentage { get; set; }
         public virtual ICollection<LipstickIngredient> LipstickIngredients { get; set;}
     }
 }

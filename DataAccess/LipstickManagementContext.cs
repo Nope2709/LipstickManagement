@@ -27,6 +27,8 @@ namespace DataAccess
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<ImageURL> ImageURLs { get; set; } = null!;
+        public virtual DbSet<Ingredient> Ingredients { get; set; } = null!;
+        public virtual DbSet<LipstickIngredient> LipstickIngredients { get; set; } = null!; 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 => optionsBuilder.UseSqlServer(GetConnectionString());

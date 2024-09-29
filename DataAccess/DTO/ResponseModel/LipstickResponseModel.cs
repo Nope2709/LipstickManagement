@@ -19,6 +19,7 @@ namespace DataAccess.DTO.ResponseModel
 
       
         public List<FeedbackResponseModel> feedbacks { get; set; }
-        public List<ImageURL> imageURLs { get; set; }
+        public List<ImageURLResponseModel> imageURLs { get; set; }
+        public List<LipstickIngredientRespnseModel> LipstickIngredients { get; set; }
     }
 }

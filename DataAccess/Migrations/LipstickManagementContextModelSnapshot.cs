@@ -159,6 +159,25 @@ namespace DataAccess.Migrations
                     b.ToTable("ImageURLs");
                 });
 
+            modelBuilder.Entity("BussinessObject.Ingredient", b =>
+                {
+                    b.Property<int>("IngredientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IngredientId");
+
+                    b.ToTable("Ingredients");
+                });
+
             modelBuilder.Entity("BussinessObject.Lipstick", b =>
                 {
                     b.Property<int>("LipstickId")
@@ -188,6 +207,29 @@ namespace DataAccess.Migrations
                     b.HasKey("LipstickId");
 
                     b.ToTable("Lipsticks");
+                });
+
+            modelBuilder.Entity("BussinessObject.LipstickIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LipstickId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("LipstickId");
+
+                    b.ToTable("LipstickIngredients");
                 });
 
             modelBuilder.Entity("BussinessObject.OrderDetail", b =>
@@ -325,6 +367,25 @@ namespace DataAccess.Migrations
                         .HasForeignKey("LipstickId");
                 });
 
+            modelBuilder.Entity("BussinessObject.LipstickIngredient", b =>
+                {
+                    b.HasOne("BussinessObject.Ingredient", "Ingredient")
+                        .WithMany("LipstickIngredients")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BussinessObject.Lipstick", "Lipstick")
+                        .WithMany("LipstickIngredients")
+                        .HasForeignKey("LipstickId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Lipstick");
+                });
+
             modelBuilder.Entity("BussinessObject.OrderDetail", b =>
                 {
                     b.HasOne("BussinessObject.Account", "Account")
@@ -366,6 +427,11 @@ namespace DataAccess.Migrations
                     b.Navigation("OrderDetails");
                 });
 
+            modelBuilder.Entity("BussinessObject.Ingredient", b =>
+                {
+                    b.Navigation("LipstickIngredients");
+                });
+
             modelBuilder.Entity("BussinessObject.Lipstick", b =>
                 {
                     b.Navigation("Customizations");
@@ -373,6 +439,8 @@ namespace DataAccess.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("ImageURLs");
+
+                    b.Navigation("LipstickIngredients");
 
                     b.Navigation("OrderDetails");
                 });

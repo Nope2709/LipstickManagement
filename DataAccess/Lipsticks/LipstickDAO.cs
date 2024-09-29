@@ -7,6 +7,7 @@ using Repository.Service.Paging;
 using Service.CurrentUser;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,20 +35,53 @@ namespace DataAccess.Lipsticks
 
         public async Task<string> CreateLipstick(CreateLipstickRequestModel lipStick)
         {
+            var lipstickIngredientDTOList = lipStick.LipstickIngredients;
 
-            
             var newLipStick = new Lipstick()
             {
                 Name = lipStick.Name,
-                Usage = lipStick.Usage, 
+                Usage = lipStick.Usage,
                 Type = lipStick.Type,
                 Description = lipStick.Description,
                 Price = lipStick.Price,
                 StockQuantity = lipStick.StockQuantity,
-                ImageURLs = lipStick.imageURLs,
-            };
+                ImageURLs = new List<ImageURL>(),
+                LipstickIngredients = new List<LipstickIngredient>(),
 
+        };     
+            foreach (var item in lipStick.imageURLs)
+            {
+                var image = new ImageURL()
+                {
+                   
+                    URL = item.URL,
+                };
+                newLipStick.ImageURLs.Add(image);
+                
+            }
+            foreach (var lipstickIngredients in lipstickIngredientDTOList)
+            {             
+                    var checkIngredient = await _context.Ingredients
+                    .SingleOrDefaultAsync(x => x.IngredientId == lipstickIngredients.IngredientId);
+                    if (checkIngredient == null)
+                {
+                  throw new InvalidDataException("Ingredient is not found");
+                   
+                }
+                        
+                    
+                    var lipStickIngredient = new LipstickIngredient()
+                    {
+                        Ingredient = checkIngredient,
+                        Lipstick = newLipStick,
+
+                    };
+                newLipStick.LipstickIngredients.Add(lipStickIngredient);
+              
+            }
             _context.Lipsticks.Add(newLipStick);
+
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -61,11 +95,12 @@ namespace DataAccess.Lipsticks
 
         public async Task<string> UpdateLipstick(UpdateLipstickRequestModel lipStick)
         {
-            var hotPotEntity = await _context.Lipsticks.SingleOrDefaultAsync(x => x.LipstickId == lipStick.LipstickId);
+            var lipstickIngredientList = lipStick.LipstickIngredients;
+            var hotPotEntity = await _context.Lipsticks.Include(l=>l.LipstickIngredients).Include(i=>i.ImageURLs).SingleOrDefaultAsync(x => x.LipstickId == lipStick.LipstickId);
             if (hotPotEntity == null)
                 throw new InvalidDataException("Lipstick is not found");
 
-
+            
 
             hotPotEntity.Name = lipStick.Name;
             hotPotEntity.Usage = lipStick.Usage;    
@@ -73,14 +108,63 @@ namespace DataAccess.Lipsticks
             hotPotEntity.Description = lipStick.Description;
             hotPotEntity.Price = lipStick.Price;
             hotPotEntity.StockQuantity = lipStick.StockQuantity;
-            hotPotEntity.ImageURLs = lipStick.imageURLs;
+            //hotPotEntity.ImageURLs = new List<ImageURL>();
+            //hotPotEntity.LipstickIngredients = new List<LipstickIngredient>();
+           
+            foreach (var item in lipStick.imageURLs)
+            {
+                var image = await _context.ImageURLs.SingleOrDefaultAsync( x => x.ImageId == item.ImageId && x.LipstickId == lipStick.LipstickId);
+                
+                if (image == null)
+                    throw new InvalidDataException("Image is not belong to this lipstick");
+
+                    image.LipstickId = lipStick.LipstickId;
+                    image.URL = item.URL;
+                _context.ImageURLs.Update(image);
+                await _context.SaveChangesAsync();
 
 
+            }
+
+                var existedLipstickIngredientIdInList = hotPotEntity.LipstickIngredients.Select(x => x.IngredientId).ToList();
+                var newDishIngredientIdInList = lipstickIngredientList.Select(x => x.IngredientId).ToList();
+                var removeLipstickIngredientIdInList = existedLipstickIngredientIdInList.Where(existedDishIngredientId => !newDishIngredientIdInList.Contains(existedDishIngredientId)).ToList();
+
+                foreach ( var lipstickIngredients in lipstickIngredientList)
+                {
+                    int existedIngredientIdPosition = existedLipstickIngredientIdInList.IndexOf(lipstickIngredients.IngredientId);
+                    if(existedIngredientIdPosition == -1)
+                    {
+                        var checkIngredient = await _context.Ingredients.SingleOrDefaultAsync(x => x.IngredientId == lipstickIngredients.IngredientId);
+                        if (checkIngredient==null)
+                            throw new InvalidDataException("Ingredient is not found");
+                        var lipStickIngredient = new LipstickIngredient()
+                        {
+                            Ingredient = checkIngredient,
+                            Lipstick = hotPotEntity,
+                            
+                        };
+                    hotPotEntity.LipstickIngredients.Add(lipStickIngredient);
+                    }
+                    else
+                    {
+                        var existedIngredientId = existedLipstickIngredientIdInList[existedIngredientIdPosition];
+                        var checkLipstickIngredient = _context.LipstickIngredients.FirstOrDefault(i => i.Ingredient.IngredientId == existedIngredientId);
+                        hotPotEntity.LipstickIngredients.Add(checkLipstickIngredient);
+                    }
+                    foreach (var removeLíptickIngredientId in removeLipstickIngredientIdInList)
+                    {
+                        var lipIngredient = hotPotEntity.LipstickIngredients.FirstOrDefault(i => i.Ingredient.IngredientId == removeLíptickIngredientId);
+
+                        hotPotEntity.LipstickIngredients.Remove(lipIngredient);
+                    }              
+            }
             _context.Lipsticks.Update(hotPotEntity);
-            if (await _context.SaveChangesAsync() > 0)
-                return "Update Lipstick Successfully";
-            else
-                return "Update Lipstick Failed";
+            await _context.SaveChangesAsync();
+           
+            return "Update Lipstick Successfully";
+            
+            
         }
 
         public async Task<string> DeleteLipstick(int id)
@@ -103,7 +187,9 @@ namespace DataAccess.Lipsticks
             int? flavorID, string? size, string? type,
             int pageIndex, int pageSize)
         {
-            IQueryable<Lipstick> hotPots = _context.Lipsticks.Include(f=>f.Feedbacks).Include(i=>i.ImageURLs).Where(x => x.LipstickId != null);
+            IQueryable<Lipstick> hotPots = _context.Lipsticks
+                .Include(f=>f.Feedbacks).Include(i=>i.ImageURLs)
+                .Include(l=>l.LipstickIngredients).ThenInclude(ig=>ig.Ingredient).Where(x => x.LipstickId != null);
 
             //TÌM THEO TÊN
             if (!string.IsNullOrEmpty(search))
