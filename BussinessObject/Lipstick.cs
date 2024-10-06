@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BussinessObject
 {
-    public partial class Lipstick
+    public partial class Lipstick : BaseEntity
     {
         public Lipstick()
         {
@@ -16,8 +16,7 @@ namespace BussinessObject
             ImageURLs = new HashSet<ImageURL>();
             LipstickIngredients = new HashSet<LipstickIngredient>();
         }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int LipstickId { get; set; }
         public string? Name { get; set; }
         public string? Usage { get; set; }

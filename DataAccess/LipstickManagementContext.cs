@@ -31,7 +31,7 @@ namespace DataAccess
         public virtual DbSet<LipstickIngredient> LipstickIngredients { get; set; } = null!; 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-=> optionsBuilder.UseSqlServer(GetConnectionString());
+=> optionsBuilder.UseNpgsql(GetConnectionString());
 
         private string GetConnectionString()
         {
@@ -39,7 +39,7 @@ namespace DataAccess
                  .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", true, true)
                         .Build();
-            var strConn = config["ConnectionStrings:Server"];
+            var strConn = config["ConnectionStrings:PostGresServer"];
 
             return strConn;
         }

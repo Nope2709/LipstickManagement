@@ -9,7 +9,7 @@ namespace DataAccess.DTO.ResponseModel
     public class FeedbackResponseModel
     {
         
-        public int? AccountId { get; set; }
+        public int? Id { get; set; }
         
         public string? Content { get; set; }
     }

@@ -83,3 +83,5 @@ C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\LipstickManagementAPI.pdb
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\LipstickManagementAPI.genruntimeconfig.cache
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\ref\LipstickManagementAPI.dll
+C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\Npgsql.dll
+C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll

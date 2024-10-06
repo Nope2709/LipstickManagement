@@ -9,6 +9,10 @@ namespace HotPotToYou.Service.Jwt
     {
         public string CreateToken(int ID, string roles)
         {
+            if (string.IsNullOrEmpty(roles))
+            {
+                throw new ArgumentNullException(nameof(roles), "Roles cannot be null or empty.");
+            }   
             var claims = new List<Claim>
             {
 

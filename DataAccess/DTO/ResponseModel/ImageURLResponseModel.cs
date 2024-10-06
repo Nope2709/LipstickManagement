@@ -8,7 +8,7 @@ namespace DataAccess.DTO.ResponseModel
 {
     public class ImageURLResponseModel
     {
-        public int ImageId { get; set; }
+        public int Id { get; set; }
         public string? URL { get; set; }
     }
 }

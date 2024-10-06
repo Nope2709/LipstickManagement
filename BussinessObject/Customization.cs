@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class Customization
+    public partial class Customization : BaseEntity
     {
-        public int CustomizationId { get; set; }
+       
         public int? LipstickId { get; set; }
         public string? EngravingText { get; set; }
         public string? QrCodeUrl { get; set; }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class Role
+    public partial class Role : BaseEntity
     {
         public Role()
         {
             Accounts = new HashSet<Account>();
         }
 
-        public int RoleId { get; set; }
+       
         public string? RoleName { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }

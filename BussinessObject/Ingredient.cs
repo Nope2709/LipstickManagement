@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace BussinessObject
 {
-    public class Ingredient
+    public class Ingredient : BaseEntity
     {
         public Ingredient() { 
             LipstickIngredients = new HashSet<LipstickIngredient>();
         }
-        [Key]
-        public int IngredientId {  get; set; }
+        
         public string? Name { get; set; }
         public decimal? Percentage { get; set; }
         public virtual ICollection<LipstickIngredient> LipstickIngredients { get; set;}

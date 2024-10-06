@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class OrderDetail
+    public partial class OrderDetail : BaseEntity
     {
-        public int OrderDetailId { get; set; }
+       
         public int? AccountId { get; set; }
         public int? AddressId { get; set; }
         public int? PaymentId { get; set; }

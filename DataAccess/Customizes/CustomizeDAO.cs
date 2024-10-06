@@ -60,7 +60,7 @@ namespace DataAccess.Customizes
 
         public async Task<string> UpdateCustomization(UpdateCustomizeRequestModel cus)
         {
-            var hotPotEntity = await _context.Customizations.SingleOrDefaultAsync(x => x.CustomizationId == cus.CustomizationId);
+            var hotPotEntity = await _context.Customizations.SingleOrDefaultAsync(x => x.Id == cus.Id);
             if (hotPotEntity == null)
                 throw new InvalidDataException("Customize is not found");
 
@@ -82,7 +82,7 @@ namespace DataAccess.Customizes
 
         public async Task<string> DeleteCustomization(int id)
         {
-            var hotPot = await _context.Customizations.SingleOrDefaultAsync(x => x.CustomizationId == id);
+            var hotPot = await _context.Customizations.SingleOrDefaultAsync(x => x.Id == id);
             if (hotPot == null)
                 throw new InvalidDataException("Customization is not found");
 
@@ -153,7 +153,7 @@ namespace DataAccess.Customizes
 
         public async Task<CustomizeResponseModel> GetCustomizationByID(int id)
         {
-            var hotpot = await _context.Customizations.SingleOrDefaultAsync(x => x.CustomizationId == id);
+            var hotpot = await _context.Customizations.SingleOrDefaultAsync(x => x.Id == id);
             if (hotpot == null)
                 throw new Exception("Customization is not found");
 

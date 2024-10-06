@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class Feedback
+    public partial class Feedback : BaseEntity
     {
-        public int FeedbackId { get; set; }
+        
         public int? AccountId { get; set; }
         public int? LipstickId { get; set; }
         public string? Content { get; set; }

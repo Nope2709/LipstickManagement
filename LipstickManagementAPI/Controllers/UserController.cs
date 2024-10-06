@@ -34,7 +34,7 @@ namespace LipstickManagementWebAPI.Controllers
             try
             {
                 var result = await _userService.Login(loginRequest);
-                var token = _jwtService.CreateToken(result.ID, result.Role);
+                var token = _jwtService.CreateToken(result.Id, result.Role);
                 return Ok(new JsonResponse<string>(token));
             }
             catch (Exception ex)

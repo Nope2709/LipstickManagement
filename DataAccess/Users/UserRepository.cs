@@ -42,7 +42,7 @@ namespace Repository.Users
 
             if (user != null)
             {
-                var chucvu = await _context.Roles.SingleOrDefaultAsync(x => x.RoleId == user.RoleId);
+                var chucvu = await _context.Roles.SingleOrDefaultAsync(x => x.Id == user.RoleId);
                 if (chucvu == null)
                 {
                     throw new Exception($"Role is not found - {loginRequest.Phone}");
@@ -139,15 +139,15 @@ namespace Repository.Users
         public async Task<string> UpdateUser(UpdateUserRequestModel user)
         {
             
-            var checkUser = await _context.Accounts.SingleOrDefaultAsync(x => x.AccountId == user.ID);
+            var checkUser = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == user.Id);
             if (checkUser == null)
                 throw new InvalidDataException("User is not found");
 
-            var checkEmail = await _context.Accounts.AnyAsync(x => x.Email == user.Email && x.AccountId != user.ID);
+            var checkEmail = await _context.Accounts.AnyAsync(x => x.Email == user.Email && x.Id != user.Id);
             if (checkEmail)
                 throw new InvalidDataException("Email is existing");
 
-            var checkPhone = await _context.Accounts.AnyAsync(x => x.Phone == user.Phone && x.AccountId != user.ID);
+            var checkPhone = await _context.Accounts.AnyAsync(x => x.Phone == user.Phone && x.Id != user.Id);
             if (checkPhone)
                 throw new InvalidDataException("Phone is existing");
 
@@ -191,7 +191,7 @@ namespace Repository.Users
 
         public async Task<UserResponseModel> GetUserByID(int id)
         {
-            var user = await _context.Accounts.Include(r => r.Role).SingleOrDefaultAsync(x => x.AccountId == id);
+            var user = await _context.Accounts.Include(r => r.Role).SingleOrDefaultAsync(x => x.Id == id);
             if (user == null)
                 throw new Exception("User is not found");
 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class Address
+    public partial class Address : BaseEntity
     {
         public Address()
         {
             OrderDetails = new HashSet<OrderDetail>();
         }
 
-        public int AddressId { get; set; }
+        
         public int? AccountId { get; set; }
         public string? StreetAddress { get; set; }
         public string? City { get; set; }

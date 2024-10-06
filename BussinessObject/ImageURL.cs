@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BussinessObject
 {
-    public partial class ImageURL
+    public partial class ImageURL : BaseEntity
     {
-        [Key]
-        public int ImageId { get; set; }
+      
         
         public string? URL { get; set; }
         public int? LipstickId { get; set; }

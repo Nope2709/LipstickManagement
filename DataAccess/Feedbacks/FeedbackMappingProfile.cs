@@ -12,6 +12,6 @@ namespace DataAccess.Feedbacks
     public class FeedbackMappingProfile : Profile
     {
         public FeedbackMappingProfile() { CreateMap<Feedback, FeedbackResponseModel>()
-                .ForMember(dest => dest.AccountId, opt => opt.MapFrom(src => src.Account.Name)); }
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Account.Name)); }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BussinessObject
 {
-    public partial class Account
+    public partial class Account : BaseEntity
     {
         public Account()
         {
@@ -12,7 +12,7 @@ namespace BussinessObject
             OrderDetails = new HashSet<OrderDetail>();
         }
 
-        public int AccountId { get; set; }
+        
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }

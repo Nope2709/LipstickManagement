@@ -18,7 +18,7 @@ namespace DataAccess.DTO.RequestModel
     }
     public class UpdateFeedbackRequestModel
     {
-        public int FeedbackId { get; set; }
+        public int Id { get; set; }
 
        
         public string? Content { get; set; }

@@ -62,7 +62,7 @@ namespace DataAccess.Lipsticks
             foreach (var lipstickIngredients in lipstickIngredientDTOList)
             {             
                     var checkIngredient = await _context.Ingredients
-                    .SingleOrDefaultAsync(x => x.IngredientId == lipstickIngredients.IngredientId);
+                    .SingleOrDefaultAsync(x => x.Id == lipstickIngredients.IngredientId);
                     if (checkIngredient == null)
                 {
                   throw new InvalidDataException("Ingredient is not found");
@@ -96,7 +96,7 @@ namespace DataAccess.Lipsticks
         public async Task<string> UpdateLipstick(UpdateLipstickRequestModel lipStick)
         {
             var lipstickIngredientList = lipStick.LipstickIngredients;
-            var hotPotEntity = await _context.Lipsticks.Include(l=>l.LipstickIngredients).Include(i=>i.ImageURLs).SingleOrDefaultAsync(x => x.LipstickId == lipStick.LipstickId);
+            var hotPotEntity = await _context.Lipsticks.Include(l=>l.LipstickIngredients).Include(i=>i.ImageURLs).SingleOrDefaultAsync(x => x.Id == lipStick.Id);
             if (hotPotEntity == null)
                 throw new InvalidDataException("Lipstick is not found");
 
@@ -113,12 +113,12 @@ namespace DataAccess.Lipsticks
            
             foreach (var item in lipStick.imageURLs)
             {
-                var image = await _context.ImageURLs.SingleOrDefaultAsync( x => x.ImageId == item.ImageId && x.LipstickId == lipStick.LipstickId);
+                var image = await _context.ImageURLs.SingleOrDefaultAsync( x => x.Id == item.Id && x.LipstickId == lipStick.Id);
                 
                 if (image == null)
                     throw new InvalidDataException("Image is not belong to this lipstick");
 
-                    image.LipstickId = lipStick.LipstickId;
+                    image.LipstickId = lipStick.Id;
                     image.URL = item.URL;
                 _context.ImageURLs.Update(image);
                 await _context.SaveChangesAsync();
@@ -135,7 +135,7 @@ namespace DataAccess.Lipsticks
                     int existedIngredientIdPosition = existedLipstickIngredientIdInList.IndexOf(lipstickIngredients.IngredientId);
                     if(existedIngredientIdPosition == -1)
                     {
-                        var checkIngredient = await _context.Ingredients.SingleOrDefaultAsync(x => x.IngredientId == lipstickIngredients.IngredientId);
+                        var checkIngredient = await _context.Ingredients.SingleOrDefaultAsync(x => x.Id == lipstickIngredients.IngredientId);
                         if (checkIngredient==null)
                             throw new InvalidDataException("Ingredient is not found");
                         var lipStickIngredient = new LipstickIngredient()
@@ -149,12 +149,12 @@ namespace DataAccess.Lipsticks
                     else
                     {
                         var existedIngredientId = existedLipstickIngredientIdInList[existedIngredientIdPosition];
-                        var checkLipstickIngredient = _context.LipstickIngredients.FirstOrDefault(i => i.Ingredient.IngredientId == existedIngredientId);
+                        var checkLipstickIngredient = _context.LipstickIngredients.FirstOrDefault(i => i.Ingredient.Id == existedIngredientId);
                         hotPotEntity.LipstickIngredients.Add(checkLipstickIngredient);
                     }
                     foreach (var removeLíptickIngredientId in removeLipstickIngredientIdInList)
                     {
-                        var lipIngredient = hotPotEntity.LipstickIngredients.FirstOrDefault(i => i.Ingredient.IngredientId == removeLíptickIngredientId);
+                        var lipIngredient = _context.LipstickIngredients.FirstOrDefault(i => i.Lipstick.Id == hotPotEntity.Id && i.Ingredient.Id  == removeLíptickIngredientId);
 
                         hotPotEntity.LipstickIngredients.Remove(lipIngredient);
                     }              

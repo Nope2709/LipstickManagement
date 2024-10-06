@@ -55,13 +55,13 @@ namespace DataAccess.Addresses
 
         public async Task<string> UpdateAddress(UpdateAddressRequestModel f)
         {
-            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.AddressId == f.AddressId);
+            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.Id == f.Id);
             if (fb == null)
                 throw new InvalidDataException("Address is not found");
 
 
             
-            fb.AccountId = f.AccountId;
+            fb.AccountId = f.Id;
             fb.StreetAddress = f.StreetAddress;
             fb.City = f.City;
             fb.ZipCode = f.ZipCode;
@@ -77,7 +77,7 @@ namespace DataAccess.Addresses
 
         public async Task<string> DeleteAddress(int id)
         {
-            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.AddressId == id);
+            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.Id == id);
             if (fb == null)
                 throw new InvalidDataException("Feedback is not found");
 
@@ -94,7 +94,7 @@ namespace DataAccess.Addresses
 
         public async Task<AddressResponseModel> GetAddressByID(int id)
         {
-            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.AddressId == id);
+            var fb = await _context.Addresses.SingleOrDefaultAsync(x => x.Id == id);
             if (fb == null)
                 throw new Exception("Address is not found");
 

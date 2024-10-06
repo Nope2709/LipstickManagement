@@ -56,7 +56,7 @@ namespace DataAccess.Feedbacks
 
         public async Task<string> UpdateFeedback(UpdateFeedbackRequestModel f)
         {
-            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.FeedbackId == f.FeedbackId);
+            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.Id == f.Id);
             if (fb == null)
                 throw new InvalidDataException("Feedback is not found");
             
@@ -75,7 +75,7 @@ namespace DataAccess.Feedbacks
 
         public async Task<string> DeleteFeedback(int id)
         {
-            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.FeedbackId == id);
+            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.Id == id);
             if (fb == null)
                 throw new InvalidDataException("Feedback is not found");
 
@@ -92,7 +92,7 @@ namespace DataAccess.Feedbacks
 
         public async Task<FeedbackResponseModel> GetFeedbackByID(int id)
         {
-            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.FeedbackId == id);
+            var fb = await _context.Feedbacks.SingleOrDefaultAsync(x => x.Id == id);
             if (fb == null)
                 throw new Exception("Feedback is not found");
 

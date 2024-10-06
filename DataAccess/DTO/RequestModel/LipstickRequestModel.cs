@@ -25,7 +25,7 @@ namespace DataAccess.DTO.RequestModel
     }
     public class UpdateLipstickRequestModel
     {
-        public int LipstickId { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public string? Usage { get; set; }
         public string? Type { get; set; }
