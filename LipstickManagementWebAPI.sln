@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessObject", "BussinessObject\BussinessObject.csproj", "{637DFB28-6EBE-4FB8-912D-6E6737DFDBD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BussinessObject", "BussinessObject\BussinessObject.csproj", "{637DFB28-6EBE-4FB8-912D-6E6737DFDBD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{DFA5C4D5-7E46-406D-9195-D763F15CF791}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{DFA5C4D5-7E46-406D-9195-D763F15CF791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{98A4A5D8-4835-47CF-94FC-0C4EBF094D3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{98A4A5D8-4835-47CF-94FC-0C4EBF094D3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LipstickManagementAPI", "LipstickManagementAPI\LipstickManagementAPI.csproj", "{827A308D-B77E-4024-9DB5-313A2812C01F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LipstickManagementAPI", "LipstickManagementAPI\LipstickManagementAPI.csproj", "{827A308D-B77E-4024-9DB5-313A2812C01F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
