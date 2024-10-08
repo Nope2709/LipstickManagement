@@ -37,4 +37,9 @@ namespace DataAccess.DTO.RequestModel
 
         public List<LipstickIngredientRespnseModel> LipstickIngredients { get; set; }
     }
+    public class OrderLipstick
+    {
+        public int ? Id { get; set; }
+        public string? Name { get; set; }
+    }
 }

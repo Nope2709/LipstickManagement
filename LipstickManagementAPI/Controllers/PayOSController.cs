@@ -5,6 +5,7 @@ using HotPotToYou.Controllers.ResponseType;
 using BussinessObject;
 using Microsoft.EntityFrameworkCore;
 using DataAccess;
+using DataAccess.DTO.RequestModel;
 
 namespace LipstickManagementAPI.Controllers
 {
@@ -24,41 +25,66 @@ namespace LipstickManagementAPI.Controllers
         }
 
         [HttpPost("payment/payos")]
-        public async Task<IActionResult> Create([FromBody] OrderDetail order)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderDetailRequest order)
         {
-            // Keep your PayOS key protected by including it by an env variable
-            
-            var paymentLinkRequest = new PaymentData(
-               order.Id,
-               (int) order.TotalPrice,
-               description: "Thanh toan don hang",
-               items: [new(order.Lipstick.Name, (int) order.Lipstick.Price, 2000)],
-               returnUrl: "/success.html",
-               cancelUrl: "/cancel.html"
-           );
-             
             PayOS payOS = new PayOS(clientId, apiKey, checksumKey);
+            var paymentLinkRequest = new PaymentData
+            (
+                order.Id,
+                (int)order.TotalPrice,
+                "Thanh toán đơn hàng",
+                [new(order.Lipstick.Name, order.quantity ?? default (int), (int) order.TotalPrice)],
+                "",
+                "",
+                "",
+                order.OrderAccount.Name,
+                order.OrderAccount.Email,
+                order.OrderAccount.Phone,
+                order.Address.StreetAddress
+               
+            );
 
-
-            
             try
             {
                 CreatePaymentResult result = await payOS.createPaymentLink(paymentLinkRequest);
-                return Ok(result.qrCode);
-            }
-            catch (Exception ex)
+              
+
+
+                // Trả về kết quả cho Frontend
+                return Ok(new
+                {
+                    orderId = order.Id,
+                    paymentLink = result.qrCode
+                });
+            }catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                throw new Exception(ex.Message);
             }
+           
+
+            
+
+
+            
+            //try
+            //{
+            //    CreatePaymentResult result = await payOS.createPaymentLink(paymentLinkRequest);
+            //    return Ok(result.qrCode);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            
         }
         [HttpPost("payment/payos/order-cancel")]
-        public async Task<IActionResult> CancelOrder([FromBody] OrderDetail order)
+        public async Task<IActionResult> CancelOrder([FromBody] CancelOrderRequest order)
         {
             PayOS payOS = new PayOS(clientId, apiKey, checksumKey);
             // If you want to cancel the payment link without reason:
             try
             {
-                var orderDetail = await _context.OrderDetails.SingleOrDefaultAsync(x => x.Id == order.Id); // Giả sử bạn lấy thông tin order từ database
+                var orderDetail = payOS.getPaymentLinkInformation(order.Id);
+                //var orderDetail = await _context.OrderDetails.SingleOrDefaultAsync(x => x.Id == order.Id); // Giả sử bạn lấy thông tin order từ database
 
                 if (orderDetail == null)
                 {

@@ -17,7 +17,7 @@ namespace BussinessObject
         public double? ShippedFee { get; set; }
         public string? ShippedAddress { get; set; }
         public DateTime? ShippedDate { get; set; }
-
+        public int? quantity { get; set; }
         public virtual Account? Account { get; set; }
         public virtual Address? Address { get; set; }
         public virtual Lipstick? Lipstick { get; set; }

@@ -2,6 +2,7 @@
 {
     public class UserRequestModel
     {
+
     }
     public class CreateUserRequestModel
     {
@@ -38,5 +39,11 @@
 
         public string ConfirmPassword { get; set; }
 
+    }
+    public class OrderAccount
+    {
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
     }
 }

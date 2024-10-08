@@ -276,6 +276,9 @@ namespace DataAccess.Migrations
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("numeric");
 
+                    b.Property<int?>("quantity")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");

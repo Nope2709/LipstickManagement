@@ -31,6 +31,7 @@ C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Npgsql.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\payos-lib-backend-dotnet.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

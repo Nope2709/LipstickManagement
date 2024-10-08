@@ -17,7 +17,8 @@
           "Newtonsoft.Json": "13.0.3",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "6.0.29",
           "Repositories": "1.0.0",
-          "Swashbuckle.AspNetCore": "6.5.0"
+          "Swashbuckle.AspNetCore": "6.5.0",
+          "payOS": "1.0.7"
         },
         "runtime": {
           "LipstickManagementAPI.dll": {}
@@ -489,6 +490,17 @@
           "lib/net6.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "6.0.29.0",
             "fileVersion": "6.0.29.0"
+          }
+        }
+      },
+      "payOS/1.0.7": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net6.0/payos-lib-backend-dotnet.dll": {
+            "assemblyVersion": "1.0.7.0",
+            "fileVersion": "1.0.7.0"
           }
         }
       },
@@ -1123,6 +1135,13 @@
       "sha512": "sha512-GCUgp/4ZltsysSRJUpvpQoFCRJ6OciL5/xZePOpZ8bekthAbLGW3emYaKf2V+1mNXUm9LhCZI7T0ib3I8yNV3A==",
       "path": "npgsql.entityframeworkcore.postgresql/6.0.29",
       "hashPath": "npgsql.entityframeworkcore.postgresql.6.0.29.nupkg.sha512"
+    },
+    "payOS/1.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4SqQbcEy/ZLYYmPeaoeMZLdElDrPQTgVz92Us7xAulPcfxB61Xx7+TkuFNHqGTFbtugfXoOjfZMBniOa0QxJ5A==",
+      "path": "payos/1.0.7",
+      "hashPath": "payos.1.0.7.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",

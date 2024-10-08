@@ -8,6 +8,7 @@ namespace DataAccess.DTO.RequestModel
 {
     public class AddressRequestModel
     {
+        public string? StreetAddress { get; set; }
     }
     public class CreateAddressRequestModel
     {
