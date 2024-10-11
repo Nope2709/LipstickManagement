@@ -1,4 +1,7 @@
-﻿namespace LipstickManagementAPI.DTO.ResponseModel
+﻿using DataAccess.DTO.RequestModel;
+using DataAccess.DTO.ResponseModel;
+
+namespace LipstickManagementAPI.DTO.ResponseModel
 {
     public class UserResponseModel
     {
@@ -7,8 +10,9 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public string Role { get; set; }
+        public List<AddressResponseModel>? Addresses { get; set; }
     }
 
     public class LoginResponseModel

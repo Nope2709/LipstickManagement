@@ -18,5 +18,6 @@ namespace Repository.Users
         Task<string> UpdateUser(UpdateUserRequestModel user);
         Task<string> DeleteUser(int id);
         Task<string> ChangePasswordUser(ChangePasswordRequestModel user);
+        Task<UserResponseModel> GetUserByPhone(string phone);
     }
 }

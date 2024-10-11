@@ -12,7 +12,6 @@ namespace BussinessObject
         public int? LipstickId { get; set; }
         public DateTime? OrderDate { get; set; }
         public decimal? TotalPrice { get; set; }
-        public string? PaymentMethod { get; set; }
         public string? Status { get; set; }
         public double? ShippedFee { get; set; }
         public string? ShippedAddress { get; set; }

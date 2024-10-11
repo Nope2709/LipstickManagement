@@ -24,4 +24,8 @@ namespace DataAccess.DTO.RequestModel
     {
         public int Id { get; set; }
     }
+    public class VietQRRequest
+    {
+        public decimal? TotalPrice { get; set; }
+    }
 }

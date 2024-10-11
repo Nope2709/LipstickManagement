@@ -54,6 +54,9 @@ namespace DataAccess.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
@@ -75,8 +78,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("StreetAddress")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ZipCode")
                         .HasColumnType("text");
@@ -88,6 +97,28 @@ namespace DataAccess.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("BussinessObject.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("BussinessObject.Customization", b =>
                 {
                     b.Property<int>("Id")
@@ -95,6 +126,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EngravingText")
                         .HasColumnType("text");
@@ -104,6 +138,9 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("QrCodeUrl")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -126,8 +163,14 @@ namespace DataAccess.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int?>("LipstickId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -146,11 +189,17 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int?>("LipstickId")
                         .HasColumnType("integer");
 
                     b.Property<string>("URL")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -167,11 +216,17 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<decimal?>("Percentage")
                         .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -186,11 +241,26 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int>("LipstickId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Details")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("DiscountPercentage")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("DiscountPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("ExpiredDate")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -201,13 +271,16 @@ namespace DataAccess.Migrations
                     b.Property<int?>("StockQuantity")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Usage")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
 
                     b.ToTable("Lipsticks");
                 });
@@ -220,11 +293,17 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("IngredientId")
                         .HasColumnType("integer");
 
                     b.Property<int>("LipstickId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -249,6 +328,9 @@ namespace DataAccess.Migrations
                     b.Property<int?>("AddressId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int?>("LipstickId")
                         .HasColumnType("integer");
 
@@ -257,9 +339,6 @@ namespace DataAccess.Migrations
 
                     b.Property<int?>("PaymentId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasColumnType("text");
 
                     b.Property<string>("ShippedAddress")
                         .HasColumnType("text");
@@ -275,6 +354,9 @@ namespace DataAccess.Migrations
 
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("quantity")
                         .HasColumnType("integer");
@@ -300,8 +382,14 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Method")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -316,8 +404,14 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("RoleName")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -373,6 +467,15 @@ namespace DataAccess.Migrations
                         .HasForeignKey("LipstickId");
 
                     b.Navigation("Lipstick");
+                });
+
+            modelBuilder.Entity("BussinessObject.Lipstick", b =>
+                {
+                    b.HasOne("BussinessObject.Category", "Category")
+                        .WithOne("Lipstick")
+                        .HasForeignKey("BussinessObject.Lipstick", "CategoryId");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("BussinessObject.LipstickIngredient", b =>
@@ -433,6 +536,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("BussinessObject.Address", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("BussinessObject.Category", b =>
+                {
+                    b.Navigation("Lipstick");
                 });
 
             modelBuilder.Entity("BussinessObject.Ingredient", b =>

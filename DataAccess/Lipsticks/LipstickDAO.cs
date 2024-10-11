@@ -36,19 +36,33 @@ namespace DataAccess.Lipsticks
         public async Task<string> CreateLipstick(CreateLipstickRequestModel lipStick)
         {
             var lipstickIngredientDTOList = lipStick.LipstickIngredients;
-
+            var checkCategory = await _context.Categories.SingleOrDefaultAsync(c => c.Id == lipStick.CategoryId);
+            if (checkCategory == null)
+            {
+                throw new InvalidDataException("Category is not found");
+            }
+            var checkExistedCategoryId = await _context.Lipsticks.AnyAsync(c => c.CategoryId == lipStick.CategoryId);
+            if (checkExistedCategoryId)
+                throw new InvalidDataException("This category belong to another lipstick");
             var newLipStick = new Lipstick()
             {
                 Name = lipStick.Name,
                 Usage = lipStick.Usage,
-                Type = lipStick.Type,
                 Description = lipStick.Description,
+                Details = lipStick.Details,
                 Price = lipStick.Price,
                 StockQuantity = lipStick.StockQuantity,
+                DiscountPercentage = lipStick.DiscountPercentage,
+                DiscountPrice = lipStick.DiscountPrice,
+                Category = checkCategory,
+                CategoryId = lipStick.CategoryId,
+                CreatedDate=DateTime.Now,
+                ExpiredDate=lipStick.ExpiredDate,
                 ImageURLs = new List<ImageURL>(),
                 LipstickIngredients = new List<LipstickIngredient>(),
-
-        };     
+        };
+           
+            
             foreach (var item in lipStick.imageURLs)
             {
                 var image = new ImageURL()
@@ -96,18 +110,31 @@ namespace DataAccess.Lipsticks
         public async Task<string> UpdateLipstick(UpdateLipstickRequestModel lipStick)
         {
             var lipstickIngredientList = lipStick.LipstickIngredients;
-            var hotPotEntity = await _context.Lipsticks.Include(l=>l.LipstickIngredients).Include(i=>i.ImageURLs).SingleOrDefaultAsync(x => x.Id == lipStick.Id);
+            var hotPotEntity = await _context.Lipsticks.Include(l=>l.LipstickIngredients).Include(i=>i.ImageURLs).Include(c=>c.Category).SingleOrDefaultAsync(x => x.Id == lipStick.Id);
             if (hotPotEntity == null)
                 throw new InvalidDataException("Lipstick is not found");
+            var checkCategory = await _context.Categories.SingleOrDefaultAsync(c => c.Id == lipStick.CategoryId);
+            if (checkCategory == null)
+            {
+                throw new InvalidDataException("Category is not found");
+            }
+            var checkExistedCategoryId = await _context.Lipsticks.AnyAsync(c=>c.CategoryId== lipStick.CategoryId && c.Id!=lipStick.Id);
+            if (checkExistedCategoryId)
+                throw new InvalidDataException("This category belong to another lipstick");
 
-            
 
             hotPotEntity.Name = lipStick.Name;
             hotPotEntity.Usage = lipStick.Usage;    
-            hotPotEntity.Type = lipStick.Type;
             hotPotEntity.Description = lipStick.Description;
+            hotPotEntity.Details = lipStick.Details;
             hotPotEntity.Price = lipStick.Price;
             hotPotEntity.StockQuantity = lipStick.StockQuantity;
+            hotPotEntity.DiscountPrice = lipStick.DiscountPrice;
+            hotPotEntity.DiscountPercentage = lipStick.DiscountPercentage;  
+            hotPotEntity.Category = checkCategory;
+            hotPotEntity.CategoryId=lipStick.CategoryId;
+            hotPotEntity.UpdatedDate=DateTime.Now;
+            hotPotEntity.ExpiredDate=lipStick.ExpiredDate;
             //hotPotEntity.ImageURLs = new List<ImageURL>();
             //hotPotEntity.LipstickIngredients = new List<LipstickIngredient>();
            
@@ -169,7 +196,7 @@ namespace DataAccess.Lipsticks
 
         public async Task<string> DeleteLipstick(int id)
         {
-            var hotPot = await _context.Lipsticks.SingleOrDefaultAsync(x => x.LipstickId == id);
+            var hotPot = await _context.Lipsticks.SingleOrDefaultAsync(x => x.Id == id);
             if (hotPot == null)
                 throw new InvalidDataException("Lipstick is not found");
 
@@ -189,12 +216,13 @@ namespace DataAccess.Lipsticks
         {
             IQueryable<Lipstick> hotPots = _context.Lipsticks
                 .Include(f=>f.Feedbacks).Include(i=>i.ImageURLs)
-                .Include(l=>l.LipstickIngredients).ThenInclude(ig=>ig.Ingredient).Where(x => x.LipstickId != null);
+                .Include(c=>c.Category)
+                .Include(l=>l.LipstickIngredients).ThenInclude(ig=>ig.Ingredient).Where(x => x.Id != null);
 
             //TÌM THEO TÊN
             if (!string.IsNullOrEmpty(search))
             {
-                hotPots = hotPots.Where(x => x.Name.Contains(search) || x.Type.Contains(search));
+                hotPots = hotPots.Where(x => x.Name.Contains(search)    );
             }
 
 
@@ -242,7 +270,7 @@ namespace DataAccess.Lipsticks
 
         public async Task<LipstickResponseModel> GetLipstickByID(int id)
         {
-            var hotpot = await _context.Lipsticks.Include(f=>f.Feedbacks).Include(i => i.ImageURLs).SingleOrDefaultAsync(x => x.LipstickId == id);
+            var hotpot = await _context.Lipsticks.Include(f=>f.Feedbacks).Include(i => i.ImageURLs).Include(c=>c.Category).SingleOrDefaultAsync(x => x.Id == id);
             if (hotpot == null)
                 throw new Exception("Lipstick is not found");
 
@@ -250,7 +278,7 @@ namespace DataAccess.Lipsticks
         }
         public Task<bool> lipstickExists(int id)
         {
-            return _context.Lipsticks.AnyAsync(l => l.LipstickId == id);
+            return _context.Lipsticks.AnyAsync(l => l.Id == id);
         }
     }
 }

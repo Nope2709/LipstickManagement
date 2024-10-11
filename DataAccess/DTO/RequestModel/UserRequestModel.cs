@@ -1,4 +1,6 @@
-﻿namespace LipstickManagementAPI.DTO.RequestModel
+﻿using DataAccess.DTO.RequestModel;
+
+namespace LipstickManagementAPI.DTO.RequestModel
 {
     public class UserRequestModel
     {
@@ -10,8 +12,9 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public string Phone { get; set; }
+ 
     }
 
     public class UpdateUserRequestModel
@@ -19,10 +22,11 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public string Phone { get; set; }
         public bool IsEnabled { get; set; }
         public int RoleID { get; set; }
+        public List<AddressRequestModel> Addresses { get; set; }
     }
 
     public class LoginRequestModel

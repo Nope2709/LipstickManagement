@@ -50,5 +50,10 @@ namespace Repository.Repositories.Users
         {
             return await _userRepository.ChangePasswordUser(user);
         }
+
+        public async Task<UserResponseModel> GetUserByPhone(string phone)
+        {
+            return await _userRepository.GetUserByPhone(phone);
+        }
     }
 }

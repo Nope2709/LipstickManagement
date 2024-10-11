@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccess.DTO.RequestModel;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -16,7 +17,7 @@ namespace LipstickManagementAPI.Controllers
             }
 
             [HttpPost("payment")]
-            public async Task<IActionResult> GenerateQRLink()
+            public async Task<IActionResult> GenerateQRLink([FromBody] VietQRRequest order)
             {
                 // Tạo request body theo format yêu cầu
                 var requestBody = new
@@ -24,8 +25,8 @@ namespace LipstickManagementAPI.Controllers
                     accountNo = "19037808367019",
                     accountName = "DINH HOANG DUONG",
                     acqId = 970407,
-                    amount = 10000,
-                    addInfo = "Kiem tra ma qr thanh toan",
+                    amount = order.TotalPrice,
+                    addInfo = "Thanh toan don hang",
                     format = "text",
                     template = "compact"
                 };

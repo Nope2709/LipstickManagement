@@ -38,6 +38,7 @@ namespace DataAccess.Addresses
                 StreetAddress = f.StreetAddress,
                 City = f.City,
                 ZipCode = f.ZipCode,
+                CreatedDate=DateTime.Now,
 
             };
 
@@ -65,7 +66,7 @@ namespace DataAccess.Addresses
             fb.StreetAddress = f.StreetAddress;
             fb.City = f.City;
             fb.ZipCode = f.ZipCode;
-
+            fb.UpdatedDate = DateTime.Now;  
 
 
             _context.Addresses.Update(fb);

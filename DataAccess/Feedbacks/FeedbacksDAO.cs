@@ -40,6 +40,7 @@ namespace DataAccess.Feedbacks
                 AccountId = f.AccountId,    
                 Content = f.Content,
                 LipstickId = f.LipstickId,
+                CreatedDate = DateTime.Now,
             };
 
             _context.Feedbacks.Add(newFB);
@@ -62,7 +63,7 @@ namespace DataAccess.Feedbacks
             
 
             fb.Content = f.Content;
-
+            fb.UpdatedDate = DateTime.Now;
             
 
 

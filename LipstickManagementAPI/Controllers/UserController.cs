@@ -88,6 +88,21 @@ namespace LipstickManagementWebAPI.Controllers
             }
 
         }
+        [AllowAnonymous]
+        [HttpGet("user/get-user-by-phone")]
+        public async Task<ActionResult<JsonResponse<UserResponseModel>>> GetUserByPhone(string phone)
+        {
+            try
+            {
+                var result = await _userService.GetUserByPhone(phone);
+                return Ok(new JsonResponse<UserResponseModel>(result));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new JsonResponse<string>(ex.Message));
+            }
+
+        }
 
         [HttpPut("user/update")]
         public async Task<ActionResult<JsonResponse<string>>> UpdateUser(

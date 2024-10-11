@@ -68,13 +68,16 @@ namespace Repository.Users
             var checkPhone = await _context.Accounts.AnyAsync(x => x.Phone == user.Phone);
             if (checkPhone)
                 throw new InvalidDataException("Phone is existing");
-
+            //var checkAddress = await _context.Addresses.AnyAsync(a=>a.Id)
             var role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName.Equals("Guest"));
             if (role == null)
                 throw new InvalidDataException("Guest is not found");
             
             if (user.ConfirmPassword != user.Password)
                 throw new InvalidDataException("Password not match");
+            
+
+           
             var newUser = new Account()
             {
                 Name = user.Name,
@@ -87,6 +90,7 @@ namespace Repository.Users
                 //CreateByID = _currentUserService.UserId,
                 CreatedDate = DateTime.Now
             };
+            
             _context.Accounts.Add(newUser);
             if (await _context.SaveChangesAsync() > 0)
                 return "Register Successfully";
@@ -96,7 +100,7 @@ namespace Repository.Users
         public async Task<List<UserResponseModel>> GetUsers(string? search, string? gender, string? sortBy, int pageIndex, int pageSize)
         {
             //NHỚ CHECK DELETEDATE
-            IQueryable<Account> users = _context.Accounts.Include(x => x.Role);
+            IQueryable<Account> users = _context.Accounts.Include(x => x.Role).Include(a=>a.Addresses);
 
 
             //SEARCH THEO NAME
@@ -157,7 +161,7 @@ namespace Repository.Users
             checkUser.Phone = user.Phone;
             checkUser.IsEnabled = user.IsEnabled;
             checkUser.RoleId = user.RoleID;
-
+            checkUser.UpdatedDate = DateTime.Now;   
 
 
 
@@ -191,7 +195,15 @@ namespace Repository.Users
 
         public async Task<UserResponseModel> GetUserByID(int id)
         {
-            var user = await _context.Accounts.Include(r => r.Role).SingleOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Accounts.Include(r => r.Role).Include(a=> a.Addresses).SingleOrDefaultAsync(x => x.Id == id);
+            if (user == null)
+                throw new Exception("User is not found");
+
+            return _mapper.Map<UserResponseModel>(user);
+        }
+        public async Task<UserResponseModel> GetUserByPhone(string phone)
+        {
+            var user = await _context.Accounts.Include(r => r.Role).Include(a => a.Addresses).SingleOrDefaultAsync(x => x.Phone.Equals(phone));
             if (user == null)
                 throw new Exception("User is not found");
 

@@ -34,7 +34,7 @@ namespace DataAccess.Customizes
 
         public async Task<string> CreateCustomization(CreateCustomizeRequestModel cus)
         {
-            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.LipstickId == cus.LipstickId);
+            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.Id == cus.LipstickId);
             if (!checkLipstick)
                 throw new InvalidDataException("Lipstick is not found");
 
@@ -64,7 +64,7 @@ namespace DataAccess.Customizes
             if (hotPotEntity == null)
                 throw new InvalidDataException("Customize is not found");
 
-            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.LipstickId == cus.LipstickId);
+            var checkLipstick = await _context.Lipsticks.AnyAsync(x => x.Id == cus.LipstickId);
             if (!checkLipstick)
                 throw new InvalidDataException("Lipstick is not found");
 
