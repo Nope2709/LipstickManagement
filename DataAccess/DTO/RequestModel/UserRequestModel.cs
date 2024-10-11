@@ -21,7 +21,7 @@ namespace LipstickManagementAPI.DTO.RequestModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public string? Gender { get; set; }
         public string Phone { get; set; }
         public bool IsEnabled { get; set; }
@@ -38,7 +38,7 @@ namespace LipstickManagementAPI.DTO.RequestModel
     }
     public class ChangePasswordRequestModel
     {
-        public string Email { get; set; }
+        public string Phone { get; set; }
         public string NewPassword { get; set; }
 
         public string ConfirmPassword { get; set; }
@@ -49,5 +49,13 @@ namespace LipstickManagementAPI.DTO.RequestModel
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
+    }
+    public class UpdateUserProfile
+    {
+        public string Name { get; set; }
+        public string? Email { get; set; }
+        public string? Gender { get; set; }
+        public string Phone { get; set; }
+        public List<AddressRequestModel> Addresses { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace BussinessObject
         {
             Addresses = new HashSet<Address>();
             Feedbacks = new HashSet<Feedback>();
-            OrderDetails = new HashSet<OrderDetail>();
+            Orders = new HashSet<Order>();
         }
 
         
@@ -25,6 +25,6 @@ namespace BussinessObject
         public virtual Role? Role { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

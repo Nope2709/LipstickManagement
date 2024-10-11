@@ -175,9 +175,9 @@ namespace Repository.Users
         public async Task<string> ChangePasswordUser(ChangePasswordRequestModel user)
         {
             
-            var checkPassword = await _context.Accounts.SingleOrDefaultAsync(x => x.Email == user.Email);
+            var checkPassword = await _context.Accounts.SingleOrDefaultAsync(x => x.Phone == user.Phone);
             if (checkPassword == null)
-                throw new InvalidDataException("Email not found");
+                throw new InvalidDataException("Phone not found");
 
             if (user.ConfirmPassword != user.NewPassword)
                 throw new InvalidDataException("Password not match");
@@ -214,5 +214,37 @@ namespace Repository.Users
         {
             throw new NotImplementedException();
         }
+        //public async Task<string> UpdateUserProfile(UpdateUserProfile user)
+        //{
+
+        //    var checkUser = await _context.Accounts.SingleOrDefaultAsync(x => x.Id == user.Id);
+        //    if (checkUser == null)
+        //        throw new InvalidDataException("User is not found");
+
+        //    var checkEmail = await _context.Accounts.AnyAsync(x => x.Email == user.Email && x.Id != user.Id);
+        //    if (checkEmail)
+        //        throw new InvalidDataException("Email is existing");
+
+        //    var checkPhone = await _context.Accounts.AnyAsync(x => x.Phone == user.Phone && x.Id != user.Id);
+        //    if (checkPhone)
+        //        throw new InvalidDataException("Phone is existing");
+
+        //    checkUser.Name = user.Name;
+        //    checkUser.Email = user.Email;
+        //    checkUser.Gender = user.Gender;
+        //    checkUser.Phone = user.Phone;
+        //    checkUser.IsEnabled = user.IsEnabled;
+        //    checkUser.RoleId = user.RoleID;
+        //    checkUser.UpdatedDate = DateTime.Now;
+
+
+
+        //    _context.Accounts.Update(checkUser);
+        //    if (await _context.SaveChangesAsync() > 0)
+        //        return "Update Successfully";
+        //    else
+        //        return "Update Failed";
+
+        //}
     }
 }
