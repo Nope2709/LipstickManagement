@@ -30,7 +30,7 @@
 //        {
 
 //            //luu db
-            
+
 
 //            PayOS payOS = new PayOS(clientId, apiKey, checksumKey);
 //            var paymentLinkRequest = new PaymentData
@@ -38,7 +38,7 @@
 //                order.Id,
 //                (int)order.TotalPrice,
 //                "Thanh toán đơn hàng",
-//                [new(order.Lipstick.Name, order.quantity ?? default (int), (int) order.TotalPrice)],
+//                [new(order.Lipstick.Name, order.quantity ?? default(int), (int)order.TotalPrice)],
 //                "",
 //                "",
 //                "",
@@ -46,13 +46,13 @@
 //                order.OrderAccount.Email,
 //                order.OrderAccount.Phone,
 //                order.Address.StreetAddress
-               
+
 //            );
-           
+
 //            try
 //            {
 //                CreatePaymentResult result = await payOS.createPaymentLink(paymentLinkRequest);
-              
+
 
 
 //                // Trả về kết quả cho Frontend
@@ -61,16 +61,17 @@
 //                    orderId = order.Id,
 //                    paymentLink = result.qrCode
 //                });
-//            }catch (Exception ex)
+//            }
+//            catch (Exception ex)
 //            {
 //                throw new Exception(ex.Message);
 //            }
-           
-
-            
 
 
-            
+
+
+
+
 //            //try
 //            //{
 //            //    CreatePaymentResult result = await payOS.createPaymentLink(paymentLinkRequest);
@@ -79,7 +80,7 @@
 //            //catch (Exception ex)
 //            //{
 //            //    return BadRequest(ex.Message);
-            
+
 //        }
 
 //        [HttpGet("payment/payos/payment-request/{id}")]
@@ -105,7 +106,7 @@
 
 
 //        }
-      
+
 //        [HttpPost("payment/payos/order-cancel")]
 //        public async Task<IActionResult> CancelOrder([FromBody] CancelOrderRequest order)
 //        {

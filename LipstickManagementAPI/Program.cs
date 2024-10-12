@@ -18,6 +18,8 @@ using BussinessObject;
 using DataAccess.Feedbacks;
 using DataAccess.Addresses;
 using Repositories.Repositories.Addresses;
+using DataAccess.Orders;
+using Repositories.Repositories.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,7 +90,8 @@ builder.Services.AddAutoMapper(typeof(UserRepository));
 builder.Services.AddScoped(typeof(LipstickDAO));
 builder.Services.AddScoped(typeof(CustomizeDAO));
 builder.Services.AddScoped(typeof(FeedbacksDAO));
-builder.Services.AddScoped(typeof(AddressDAO));
+builder.Services.AddScoped(typeof(AddressDAO)); 
+builder.Services.AddScoped(typeof(OrderDAO));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
@@ -99,7 +102,7 @@ builder.Services.AddScoped<ILipstickRepositories, LipstickRepository>();
 builder.Services.AddScoped<ICustomizationRepository, CustomizationRepository>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Configure the HTTP request pipeline.

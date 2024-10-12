@@ -8,5 +8,6 @@ namespace BussinessObject
         public int? Quantity { get; set; }
         public int? LipstickId { get; set; }
         public int? OrderId { get; set;}
+        public decimal? TotalPrice { get; set; }
     }
 }

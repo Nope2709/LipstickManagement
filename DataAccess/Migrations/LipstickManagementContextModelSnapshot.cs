@@ -314,7 +314,7 @@ namespace DataAccess.Migrations
                     b.ToTable("LipstickIngredients");
                 });
 
-            modelBuilder.Entity("BussinessObject.OrderDetail", b =>
+            modelBuilder.Entity("BussinessObject.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -330,9 +330,6 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("LipstickId")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("OrderDate")
                         .HasColumnType("timestamp with time zone");
@@ -358,18 +355,48 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("quantity")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("BussinessObject.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("LipstickId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("LipstickId");
 
-                    b.HasIndex("PaymentId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -497,31 +524,36 @@ namespace DataAccess.Migrations
                     b.Navigation("Lipstick");
                 });
 
-            modelBuilder.Entity("BussinessObject.OrderDetail", b =>
+            modelBuilder.Entity("BussinessObject.Order", b =>
                 {
                     b.HasOne("BussinessObject.Account", "Account")
-                        .WithMany("OrderDetails")
+                        .WithMany("Orders")
                         .HasForeignKey("AccountId");
 
                     b.HasOne("BussinessObject.Address", "Address")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("BussinessObject.Lipstick", "Lipstick")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("LipstickId");
-
                     b.HasOne("BussinessObject.Payment", "Payment")
-                        .WithMany("OrderDetails")
+                        .WithMany("Orders")
                         .HasForeignKey("PaymentId");
 
                     b.Navigation("Account");
 
                     b.Navigation("Address");
 
-                    b.Navigation("Lipstick");
-
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("BussinessObject.OrderDetail", b =>
+                {
+                    b.HasOne("BussinessObject.Lipstick", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("LipstickId");
+
+                    b.HasOne("BussinessObject.Order", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("BussinessObject.Account", b =>
@@ -530,12 +562,7 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Feedbacks");
 
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("BussinessObject.Address", b =>
-                {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BussinessObject.Category", b =>
@@ -561,9 +588,14 @@ namespace DataAccess.Migrations
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("BussinessObject.Payment", b =>
+            modelBuilder.Entity("BussinessObject.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("BussinessObject.Payment", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BussinessObject.Role", b =>

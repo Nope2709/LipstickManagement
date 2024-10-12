@@ -9,16 +9,27 @@ namespace DataAccess.DTO.RequestModel
 {
     public class OrderDetailRequest
     {
-        public int Id { get; set; } 
+      
+    }
+    public class CreateOrderRequestModel
+    {
+        public int AccountId { get; set; }
+        public int PaymentId { get; set; }
+        public int AddressId { get; set; }
         public DateTime? OrderDate { get; set; }
         public decimal? TotalPrice { get; set; }
-        public double? ShippedFee { get; set; }
-        public DateTime? ShippedDate { get; set; }
-        public int? quantity { get; set; }
-        public OrderLipstick Lipstick { get; set; }  
-        public AddressRequestModel Address { get; set; }   
-        public OrderAccount OrderAccount { get; set; }
-        
+        public List<OrderItem> Items { get; set; }
+    }
+    public class UpdateOrderRequestModel : CreateOrderRequestModel
+    {
+        public int Id { get; set; }
+        public string? Status { get; set; }
+    }
+    public class OrderItem
+    {
+        public int Id { get; set; }
+        public int? Quantity { get; set; }
+        public decimal Price { get; set; }
     }
     public class CancelOrderRequest
     {
@@ -27,5 +38,9 @@ namespace DataAccess.DTO.RequestModel
     public class VietQRRequest
     {
         public decimal? TotalPrice { get; set; }
+    }
+    public class ConfirmWebhook
+    {
+        public string Url { get; set; }
     }
 }

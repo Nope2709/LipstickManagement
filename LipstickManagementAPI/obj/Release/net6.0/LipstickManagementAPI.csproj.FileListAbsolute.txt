@@ -86,3 +86,4 @@ C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\obj\
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\Npgsql.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\payos-lib-backend-dotnet.dll
+C:\Users\LENOVO\source\repos\LipstickManagementWebAPI\LipstickManagementAPI\bin\Release\net6.0\QrCodeGenerator.dll
