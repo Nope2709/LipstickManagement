@@ -14,7 +14,7 @@ namespace DataAccess.Orders
         public OrderMappingProfile()
         {
             CreateMap<Order, OrderResponseModel>()
-                .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.Payment.Method));
+                .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Payment.Id));
 
 
         }
